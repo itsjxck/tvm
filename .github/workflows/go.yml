@@ -33,6 +33,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    needs: build
     steps:
     - name: ls dir
       run: |

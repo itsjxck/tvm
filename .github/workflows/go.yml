@@ -28,4 +28,4 @@ jobs:
         # fi
 
     - name: Build
-      run: GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build hashiman_${{ matrix.os }}_${{ matrix.arch }} .
+      run: GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -o hashiman_${{ matrix.os }}_${{ matrix.arch }} .

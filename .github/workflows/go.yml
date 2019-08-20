@@ -5,7 +5,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    strategey:
+    strategy:
       matrix:
         os: [darwin, linux]
         arch: [amd64]

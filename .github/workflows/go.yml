@@ -29,3 +29,11 @@ jobs:
 
     - name: Build
       run: GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -o hashiman_${{ matrix.os }}_${{ matrix.arch }} .
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+    - name: ls dir
+      run: |
+        ls -la

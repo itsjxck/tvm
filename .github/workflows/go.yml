@@ -31,6 +31,6 @@ jobs:
         FILENAME=hashiman_${{ matrix.os }}_${{ matrix.arch }}.zip
         zip $FILENAME ./hashiman
         UPLOAD_URL=$(curl https://api.github.com/repos/itsjxck/hashiman/releases/$GITHUB_REF | jq -r '.upload_url')
-        UPLOAD_URL=${UPLOAD_URL/{?name,label}/?name=$FILENAME}
+        UPLOAD_URL=${UPLOAD_URL/"{?name,label}"/?name=$FILENAME}
         curl -H "Authorization: token $GITHUB_TOKEN" -F "file=@$FILENAME;type=application/zip" $UPLOAD_URL
 

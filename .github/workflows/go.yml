@@ -27,7 +27,7 @@ jobs:
 
     - name: Add to release
       run: |
-        apt-get install jq
+        sudo apt-get install jq
         FILENAME=hashiman_${{ matrix.os }}_${{ matrix.arch }}.zip
         zip $FILENAME ./hashiman
         UPLOAD_URL=$(curl https://api.github.com/repos/itsjxck/hashiman/releases/$GITHUB_REF | jq -r '.upload_url')

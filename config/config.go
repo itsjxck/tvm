@@ -2,7 +2,7 @@ package config
 
 var (
 	// Version => The version of the app; dynamically set during build, 0.0.1 is a placeholder
-	Version = "0.1.0"
+	Version = "v0.1.0"
 	// SupportedTools => A list of the Hashicorp tools supported by this manager
 	SupportedTools = []string{
 		"terraform",

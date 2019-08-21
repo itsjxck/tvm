@@ -17,11 +17,12 @@ func (t *Tool) DetermineVersionToInstall() (err error) {
 		return nil
 	}
 
-	if err := t.DiscoverInstalledVersions(); err != nil {
+	installed, err := t.discoverVersionsFromInstallDir()
+	if err != nil {
 		t.Log("failed to discover installed versions:", err)
 	}
 
-	t.SelectedVersion, err = utils.RequestVersionSelect(t.AvailableVersions, t.InstalledVersions, "(Installed)")
+	t.SelectedVersion, err = utils.RequestVersionSelect(t.AvailableVersions, installed, "(Installed)")
 
 	return err
 }

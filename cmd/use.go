@@ -38,6 +38,10 @@ func useHandler(cmd *cobra.Command, args []string) {
 		tool.Quit("error discovering available versions:", err)
 	}
 
+	if len(tool.InstalledVersions) < 1 {
+		tool.Quit("No versions installed matching SemVer input", args[1])
+	}
+
 	if err := tool.DetermineVersionToUse(); err != nil {
 		tool.Quit("error determining version to use:", err)
 	}

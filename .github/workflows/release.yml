@@ -1,5 +1,5 @@
 name: Go
-on: [release]
+on: release
 jobs:
 
   build:
@@ -32,5 +32,7 @@ jobs:
         zip $FILENAME ./hashiman
         UPLOAD_URL=$(curl https://api.github.com/repos/itsjxck/hashiman/releases/$GITHUB_REF | jq -r '.upload_url')
         UPLOAD_URL=${UPLOAD_URL/"{?name,label}"/?name=$FILENAME}
-        curl -H "Authorization: token $GITHUB_TOKEN" -F "file=@$FILENAME;type=application/zip" $UPLOAD_URL
-
+        AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
+        CONTENT_LENGTH_HEADER="Content-Length: $(stat -c%s "${FILENAME}")"
+        CONTENT_TYPE_HEADER="Content-Type: application/zip"
+        curl -sSL -XPOST -H "${AUTH_HEADER}" -H "${CONTENT_LENGTH_HEADER}" -H "${CONTENT_TYPE_HEADER}" --upload-file "${FILENAME}" "${UPLOAD_URL}"

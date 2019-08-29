@@ -1,38 +1,21 @@
 package cmd
 
 import (
-	"fmt"
-
-	"github.com/itsjxck/hashiman/config"
-	"github.com/itsjxck/hashiman/tool"
-	"github.com/itsjxck/hashiman/utils"
+	"github.com/itsjxck/tvm/terraform"
 	"github.com/spf13/cobra"
 )
 
 // listCmd represents the installed command
 var listCmd = &cobra.Command{
-	Use:     "list [tool]",
+	Use:     "list",
 	Aliases: []string{"ls", "l"},
-	Short:   "Displays a list of all installed tool versions",
-	Long: `Displays a list of all installed tool versions.
+	Short:   "Displays a list of all installed Terraform versions",
+	Long: `Displays a list of all installed Terraform versions.
 	
 Examples:
-hashiman list		# Lists all installed versions of all tools
-hashiman list terraform	# Lists all installed versions of Terraform
-hashiman ls terraform	# Lists all installed versions of Terraform using the command alias
+tvm list		# Lists all installed versions of Terraform
+tvm ls	# Lists all installed versions of Terraform using the command alias
 `,
-	Args: func(cmd *cobra.Command, args []string) error {
-		if len(args) == 0 {
-			return nil
-		} else if len(args) == 1 {
-			if err := utils.ToolIsValid(args[0]); err != nil {
-				return err
-			}
-			return nil
-		} else {
-			return fmt.Errorf("too many arguments")
-		}
-	},
 	Run: listInstalled,
 }
 
@@ -41,33 +24,23 @@ func init() {
 }
 
 func listInstalled(cmd *cobra.Command, args []string) {
-	tools := []tool.Tool{}
-	if len(args) > 1 {
-		tools = append(tools, tool.Tool{Name: args[0]})
-	} else {
-		ts := config.SupportedTools
-		for _, t := range ts {
-			tools = append(tools, tool.Tool{Name: t})
-		}
+	terraform := terraform.Terraform{}
+
+	if err := terraform.DiscoverInstalledVersions(); err != nil {
+		terraform.Quit("unable to discover installed versions:", err)
 	}
 
-	for _, tool := range tools {
-		if err := tool.DiscoverInstalledVersions(); err != nil {
-			tool.Quit("unable to discover installed versions:", err)
-		}
+	if err := terraform.DetectCurrentVersion(); err != nil {
+		terraform.Quit("unable to detect current version:", err)
+	}
 
-		if err := tool.DetectCurrentVersion(); err != nil {
-			tool.Quit("unable to detect current version:", err)
-		}
+	terraform.Log("Installed Versions:")
 
-		tool.Log("Installed Versions:")
-
-		for _, v := range tool.InstalledVersions {
-			str := "	" + v.String()
-			if v.String() == tool.CurrentVersion.String() {
-				str = str + "	(currently used)"
-			}
-			tool.Log(str)
+	for _, v := range terraform.InstalledVersions {
+		str := "	" + v.String()
+		if v.String() == terraform.CurrentVersion.String() {
+			str = str + "	(currently used)"
 		}
+		terraform.Log(str)
 	}
 }

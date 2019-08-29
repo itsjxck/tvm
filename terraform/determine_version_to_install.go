@@ -1,13 +1,13 @@
-package tool
+package terraform
 
 import (
 	"fmt"
 
-	"github.com/itsjxck/hashiman/utils"
+	"github.com/itsjxck/tvm/utils"
 )
 
 // DetermineVersionToInstall =>
-func (t *Tool) DetermineVersionToInstall() (err error) {
+func (t *Terraform) DetermineVersionToInstall() (err error) {
 	if t.AvailableVersions == nil || len(t.AvailableVersions) == 0 {
 		return fmt.Errorf("no available versions")
 	}

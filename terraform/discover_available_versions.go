@@ -1,4 +1,4 @@
-package tool
+package terraform
 
 import (
 	"encoding/json"
@@ -7,11 +7,12 @@ import (
 	"net/http"
 
 	"github.com/Masterminds/semver"
-	"github.com/itsjxck/hashiman/utils"
+	"github.com/itsjxck/tvm/config"
+	"github.com/itsjxck/tvm/utils"
 )
 
 // DiscoverAvailableVersions =>
-func (t *Tool) DiscoverAvailableVersions() error {
+func (t *Terraform) DiscoverAvailableVersions() error {
 	if t.VersionConstraint == nil {
 		return fmt.Errorf("version constraint not set")
 	}
@@ -32,8 +33,8 @@ func (t *Tool) DiscoverAvailableVersions() error {
 	return nil
 }
 
-func (t *Tool) fetchGithubReleases() (versions []*semver.Version, err error) {
-	apiURL := fmt.Sprintf("https://api.github.com/repos/hashicorp/%s/releases", t.Name)
+func (t *Terraform) fetchGithubReleases() (versions []*semver.Version, err error) {
+	apiURL := fmt.Sprintf("https://api.github.com/repos/hashicorp/%s/releases", config.Tool)
 
 	resp, err := http.Get(apiURL)
 	if err != nil {

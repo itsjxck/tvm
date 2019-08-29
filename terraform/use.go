@@ -1,20 +1,20 @@
-package tool
+package terraform
 
 import (
 	"fmt"
 	"os"
 
-	"github.com/itsjxck/hashiman/config"
+	"github.com/itsjxck/tvm/config"
 )
 
 // Use =>
-func (t *Tool) Use() error {
+func (t *Terraform) Use() error {
 	if t.SelectedVersion == nil {
 		return fmt.Errorf("no version set")
 	}
 
-	source := fmt.Sprintf("%s/%s/%s/%s", config.HomeDir, config.InstallDir, t.Name, t.SelectedVersion)
-	dest := fmt.Sprintf("%s/%s", config.BinDir, t.Name)
+	source := fmt.Sprintf("%s/%s/%s/%s", config.HomeDir, config.InstallDir, config.Tool, t.SelectedVersion)
+	dest := fmt.Sprintf("%s/%s", config.BinDir, config.Tool)
 
 	t.Log("Switching to version", t.SelectedVersion)
 

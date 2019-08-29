@@ -1,12 +1,11 @@
-package tool
+package terraform
 
 import (
 	"github.com/Masterminds/semver"
 )
 
-// Tool =>
-type Tool struct {
-	Name              string
+// Terraform =>
+type Terraform struct {
 	SelectedVersion   *semver.Version
 	CurrentVersion    *semver.Version
 	VersionConstraint *semver.Constraints

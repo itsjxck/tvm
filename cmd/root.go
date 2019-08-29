@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/itsjxck/hashiman/config"
+	"github.com/itsjxck/tvm/config"
 
 	"github.com/spf13/cobra"
 
@@ -16,8 +16,8 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:     "hashiman",
-	Short:   "A manager for Hashicorp Software.",
+	Use:     "tvm",
+	Short:   "A manager for Terraform.",
 	Version: config.Version,
 }
 
@@ -37,7 +37,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.hashiman/config.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.tvm/config.yaml)")
 	rootCmd.PersistentFlags().BoolP("latest", "l", false, "Automatically use the latest version and skip prompts")
 }
 
@@ -56,7 +56,7 @@ func initConfig() {
 
 		config.HomeDir = home
 
-		viper.AddConfigPath(home + ".hashiman/")
+		viper.AddConfigPath(home + ".tvm/")
 		viper.SetConfigName("config")
 	}
 

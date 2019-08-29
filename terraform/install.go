@@ -1,20 +1,20 @@
-package tool
+package terraform
 
 import (
 	"fmt"
 
-	"github.com/itsjxck/hashiman/config"
-	"github.com/itsjxck/hashiman/utils"
+	"github.com/itsjxck/tvm/config"
+	"github.com/itsjxck/tvm/utils"
 )
 
 // Install =>
-func (t *Tool) Install() error {
+func (t *Terraform) Install() error {
 	if t.SelectedVersion == nil {
 		return fmt.Errorf("no version set")
 	}
 
-	file := fmt.Sprintf("%s/%s_%s.zip", config.DownloadDir, t.Name, t.SelectedVersion)
-	installLoc := fmt.Sprintf("%s/%s/%s/", config.HomeDir, config.InstallDir, t.Name)
+	file := fmt.Sprintf("%s/%s_%s.zip", config.DownloadDir, config.Tool, t.SelectedVersion)
+	installLoc := fmt.Sprintf("%s/%s/%s/", config.HomeDir, config.InstallDir, config.Tool)
 	defer t.Cleanup()
 
 	t.Log("Installing", t.SelectedVersion)

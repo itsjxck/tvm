@@ -1,4 +1,4 @@
-package tool
+package terraform
 
 import (
 	"fmt"
@@ -7,19 +7,19 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/itsjxck/hashiman/config"
+	"github.com/itsjxck/tvm/config"
 )
 
 // Download =>
-func (t *Tool) Download() error {
+func (t *Terraform) Download() error {
 	if t.SelectedVersion == nil {
 		return fmt.Errorf("no version set")
 	}
 
 	t.Log("Downloading", t.SelectedVersion)
 
-	fileURL := fmt.Sprintf("https://releases.hashicorp.com/%s/%s/%s_%s_%s_%s.zip", t.Name, t.SelectedVersion, t.Name, t.SelectedVersion, runtime.GOOS, runtime.GOARCH)
-	downloadTo := fmt.Sprintf("%s/%s_%s.zip", config.DownloadDir, t.Name, t.SelectedVersion)
+	fileURL := fmt.Sprintf("https://releases.hashicorp.com/%s/%s/%s_%s_%s_%s.zip", config.Tool, t.SelectedVersion, config.Tool, t.SelectedVersion, runtime.GOOS, runtime.GOARCH)
+	downloadTo := fmt.Sprintf("%s/%s_%s.zip", config.DownloadDir, config.Tool, t.SelectedVersion)
 
 	resp, err := http.Get(fileURL)
 	if err != nil {

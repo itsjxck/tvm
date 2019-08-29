@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/itsjxck/hashiman/tool"
+	"github.com/itsjxck/tvm/terraform"
 
 	"github.com/spf13/cobra"
 )
@@ -10,14 +10,15 @@ var useLatest bool
 
 // useCmd represents the use command
 var useCmd = &cobra.Command{
-	Use:   "use <tool> [semver]",
-	Short: "Switch between installed versions of a tool.",
+	Use:     "use <tool> [semver]",
+	Aliases: []string{"u"},
+	Short:   "Switch between installed versions of a tool.",
 	Long: `Switch between installed versions of a tool.
 
 Examples:
-hashiman use terraform -l	# Switches to the latest installed version of Terraform
-hashiman use terraform 0.12	# Switches to the latest 0.12 version of Terraform
-hashiman use terraform 0.12.6	# Switches to version 0.12.6 of Terraform
+tvm use terraform -l	# Switches to the latest installed version of Terraform
+tvm use terraform 0.12	# Switches to the latest 0.12 version of Terraform
+tvm use terraform 0.12.6	# Switches to version 0.12.6 of Terraform
 `,
 	Args: validateArgs,
 	Run:  useHandler,
@@ -28,25 +29,25 @@ func init() {
 }
 
 func useHandler(cmd *cobra.Command, args []string) {
-	tool := tool.Tool{}
+	terraform := terraform.Terraform{}
 
-	if err := tool.ProcessArgs(cmd, args); err != nil {
-		tool.Quit("error processing args:", err)
+	if err := terraform.ProcessArgs(cmd, args); err != nil {
+		terraform.Quit("error processing args:", err)
 	}
 
-	if err := tool.DiscoverInstalledVersions(); err != nil {
-		tool.Quit("error discovering available versions:", err)
+	if err := terraform.DiscoverInstalledVersions(); err != nil {
+		terraform.Quit("error discovering available versions:", err)
 	}
 
-	if len(tool.InstalledVersions) < 1 {
-		tool.Quit("No versions installed matching SemVer input", args[1])
+	if len(terraform.InstalledVersions) < 1 {
+		terraform.Quit("No versions installed matching SemVer input", args[0])
 	}
 
-	if err := tool.DetermineVersionToUse(); err != nil {
-		tool.Quit("error determining version to use:", err)
+	if err := terraform.DetermineVersionToUse(); err != nil {
+		terraform.Quit("error determining version to use:", err)
 	}
 
-	if err := tool.Use(); err != nil {
-		tool.Quit("error switching to version:", err)
+	if err := terraform.Use(); err != nil {
+		terraform.Quit("error switching to version:", err)
 	}
 }

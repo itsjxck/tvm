@@ -1,4 +1,4 @@
-package tool
+package terraform
 
 import (
 	"fmt"
@@ -6,12 +6,12 @@ import (
 	"sort"
 
 	"github.com/Masterminds/semver"
-	"github.com/itsjxck/hashiman/config"
-	"github.com/itsjxck/hashiman/utils"
+	"github.com/itsjxck/tvm/config"
+	"github.com/itsjxck/tvm/utils"
 )
 
 // DiscoverInstalledVersions =>
-func (t *Tool) DiscoverInstalledVersions() error {
+func (t *Terraform) DiscoverInstalledVersions() error {
 	versions, err := t.discoverVersionsFromInstallDir()
 	if err != nil {
 		return fmt.Errorf("cant load installed versions: %s", err)
@@ -26,8 +26,8 @@ func (t *Tool) DiscoverInstalledVersions() error {
 	return nil
 }
 
-func (t *Tool) discoverVersionsFromInstallDir() (versions []*semver.Version, err error) {
-	files, err := ioutil.ReadDir(fmt.Sprintf("%s/%s/%s", config.HomeDir, config.InstallDir, t.Name))
+func (t *Terraform) discoverVersionsFromInstallDir() (versions []*semver.Version, err error) {
+	files, err := ioutil.ReadDir(fmt.Sprintf("%s/%s/%s", config.HomeDir, config.InstallDir, config.Tool))
 	if err != nil {
 		return nil, err
 	}

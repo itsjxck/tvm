@@ -1,15 +1,15 @@
-package tool
+package terraform
 
 import (
 	"fmt"
 
 	"github.com/Masterminds/semver"
 
-	"github.com/itsjxck/hashiman/utils"
+	"github.com/itsjxck/tvm/utils"
 )
 
 // DetermineVersionToUse =>
-func (t *Tool) DetermineVersionToUse() (err error) {
+func (t *Terraform) DetermineVersionToUse() (err error) {
 	if t.InstalledVersions == nil || len(t.InstalledVersions) == 0 {
 		return fmt.Errorf("no installed versions")
 	}

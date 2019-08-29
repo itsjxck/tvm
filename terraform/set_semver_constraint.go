@@ -1,4 +1,4 @@
-package tool
+package terraform
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 )
 
 // SetSemverConstraint =>
-func (t *Tool) SetSemverConstraint(semverString string) (err error) {
+func (t *Terraform) SetSemverConstraint(semverString string) (err error) {
 	if len(strings.Split(semverString, ".")) < 3 && semverString[0:1] != "~" {
 		semverString = fmt.Sprintf("~%s", semverString)
 	}

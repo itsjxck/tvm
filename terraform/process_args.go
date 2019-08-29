@@ -1,15 +1,14 @@
-package tool
+package terraform
 
 import "github.com/spf13/cobra"
 
 // ProcessArgs =>
-func (t *Tool) ProcessArgs(cmd *cobra.Command, args []string) (err error) {
-	tool, semverIdent := args[0], "*"
-	if len(args) > 1 {
-		semverIdent = args[1]
+func (t *Terraform) ProcessArgs(cmd *cobra.Command, args []string) (err error) {
+	semverIdent := "*"
+	if len(args) > 0 {
+		semverIdent = args[0]
 	}
 
-	t.Name = tool
 	if err := t.SetSemverConstraint(semverIdent); err != nil {
 		return err
 	}

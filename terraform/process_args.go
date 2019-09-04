@@ -13,6 +13,10 @@ func (t *Terraform) ProcessArgs(cmd *cobra.Command, args []string) (err error) {
 		return err
 	}
 
+	if t.RemoveAll, err = cmd.Flags().GetBool("all"); err != nil {
+		// do nowt
+	}
+
 	if t.UseLatestVersion, err = cmd.Parent().PersistentFlags().GetBool("latest"); err != nil {
 		return err
 	}

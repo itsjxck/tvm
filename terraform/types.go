@@ -12,4 +12,5 @@ type Terraform struct {
 	InstalledVersions []*semver.Version
 	AvailableVersions []*semver.Version
 	UseLatestVersion  bool
+	RemoveAll         bool
 }
